@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Project-1</title>
+  <script src="./d3/d3.js"></script>
+  <link rel="stylesheet" href="./css/style.css" />
+
+</head>
+
+<body>
+  <div style="display: flex; flex-direction: row; margin-bottom: 100px; width: 100%;">
+    <span style="width: 100%;">
+      <h2 style="text-align: center;">Dr. John Snow's Cholera Map(1854)</h2>
+      <span>
+        <button type="button" id="documentation"><a href="https://docs.google.com/document/d/1ZqXudHzCHZC58QsYiT_TIdG6F0a1KTRX/edit?usp=share_link&ouid=108874741426527887392&rtpof=true&sd=true">Design
+            Documentation</a></button>
+        <button type="button" id="video"><a href="https://youtu.be/Pb_GwU3XORM">Visualization Video</a></button>
+      </span>
+    </span>
+  </div>
+
+  <div style="display: flex; flex-direction: row;">
+
+    <div style="flex-direction: column;">
+
+      <div style="flex-direction: row; margin: 5px; align-items:center; justify-content: center; font-size: 12px;">
+        <div style="margin-top: 5px; justify-content: center;">
+          <span>
+            <label for="deaths" style="font-weight: bold;">Filter by:</label>
+          </span>
+
+          <span>
+            <input type="radio" id="lct" class="fRadio" name="cat_distribution" value="location"
+              onclick="handleRadioChange(this.value)" style="width: 10px; height:10px;" checked>
+            <label for="lct">Normal View</label>
+          </span>
+          <span>
+            <input type="radio" id="gen" class="fRadio" name="cat_distribution" onclick="handleRadioChange(this.value)"
+              style="width: 10px; height:10px;" value="gender">
+            <label for="gen">Gender</label>
+          </span>
+          <span>
+            <input type="radio" id="ag" class="fRadio" name="cat_distribution" onclick="handleRadioChange(this.value)"
+              style="width: 10px; height:10px;" value="age">
+            <label for="ag">Age Group</label>
+          </span>
+
+          <span style="margin-left: 25px; margin-top: 2px;">
+            <label style="font-weight: bold;">Zoom In/ Zoom Out:</label>
+            <span>
+              <button type="button" id="plus">+</button>
+              <button type="button" id="minus">-</button>
+            </span>
+          </span>
+        </div>
+
+        <span style="flex-direction:row; align-items: center; ">
+          <span id="locations" style="display: inline; margin-top: 5px;">
+            <label style="font-weight: bold;">Map Symbols:</label>
+            <span>
+              <span><img src="img/purple.jpeg" width="15px" height="15px" /></span>
+              <span style="vertical-align: center;">Pumps</span>
+            </span>
+            <span>
+              <span><img src="img/brewery.png" width="15px" height="15px" /></span>
+              <span style="vertical-align: center;">Brewery</span>
+            </span>
+            <span>
+              <span><img src="img/blue.png" width="15px" height="15px" /></span>
+              <span style="vertical-align: center;">Work House</span>
+            </span>
+            <span>
+              <span><img src="img/brown.png" width="20px" height="20px" /></span>
+              <span style="vertical-align: center;">Location</span>
+            </span>
+          </span>
+          <span id="genders" style="display: none; margin-top: 5px;">
+            <label style="font-weight: bold;">Map Symbols:</label>
+            <span>
+              <span><img src="img/purple.jpeg" width="15px" height="15px" /></span>
+              <span style="vertical-align: top;">Pumps</span>
+            </span>
+            <span>
+              <span><img src="img/brewery.png" width="15px" height="15px" /></span>
+              <span style="vertical-align: top;">Brewery</span>
+            </span>
+            <span>
+              <span><img src="img/blue.png" width="15px" height="15px" /></span>
+              <span style="vertical-align: top;">Work House</span>
+            </span>
+            <span>
+              <span><img src="img/red.png" width="15px" height="15px" /></span>
+              <span style="vertical-align: top;">Male</span>
+            </span>
+            <span>
+              <span><img src="img/green.png" width="15px" height="15px" /></span>
+              <span style="vertical-align: top;">Female</span>
+            </span>
+          </span>
+          <span id="ages" style="display: none; margin-top: 5px;">
+            <label style="font-weight: bold;">Map Symbols:</label>
+            <span>
+              <span><img src="img/purple.jpeg" width="15px" height="15px" /></span>
+              <span style="vertical-align: center;">Pumps</span>
+            </span>
+            <span>
+              <span><img src="img/brewery.png" width="15px" height="15px" /></span>
+              <span style="vertical-align: center;">Brewery</span>
+            </span>
+            <span>
+              <span><img src="img/blue.png" width="15px" height="15px" /></span>
+              <span style="vertical-align: center;">Work House</span>
+            </span>
+            <span>
+              <span><img src="img/age1.png" width="20px" height="20px" /></span>
+              <span style="vertical-align: center;">0-10</span>
+            </span>
+            <span>
+              <span><img src="img/age2.png" width="20px" height="20px" /></span>
+              <span style="vertical-align: center;">11-20</span>
+            </span>
+            <span>
+              <span><img src="img/age3.png" width="20px" height="20px" /></span>
+              <span style="vertical-align: center;">21-40</span>
+            </span>
+            <span>
+              <span><img src="img/age4.png" width="20px" height="20px" /></span>
+              <span style="vertical-align: center;">41-60</span>
+            </span>
+            <span>
+              <span><img src="img/age5.png" width="20px" height="20px" /></span>
+              <span style="vertical-align: center;">61-80</span>
+            </span>
+            <span>
+              <span><img src="img/age6.png" width="20px" height="20px" /></span>
+              <span style="vertical-align: center;">>80</span>
+            </span>
+
+          </span>
+        </span>
+      </div>
+      <div id="map"></div>
+    </div>
+
+    <div style="flex-direction: column; margin-top: 20px;">
+      <div style="display: flex; flex-direction:row;">
+        <span id="ageBars"></span>
+        <span id="genderBars"></span>
+      </div>
+      <div id="linechart"></div>
+    </div>
+
+  </div>
+  <script>
+    //Map
+var k = 40;
+var e = 0.1;
+var l = 40;
+
+var zoom = d3.zoom().on("zoom", function () {
+
+    var trans = d3.event.transform;
+    var k1 = +l;
+
+    var lk = +trans.k1;
+    if (lk == e) {
+        g.attr("transform", d3.zoomIdentity.translate(trans.x, trans.y).scale(k));
+    }
+});
+
+var svg = d3.select("#map")
+    .append("svg")
+    .attr("width", 600)
+    .attr("height", 800)
+    .on("click", function () {
+        if (k < 80) {
+            l = l + 1;
+            k = k + 1;
+            g.attr("transform", d3.zoomIdentity.translate(-99, -100).scale(k));
+        }
+        else {
+            l = l - 1;
+            k = k + 1;
+            g.attr("transform", d3.zoomIdentity.translate(-99, -100).scale(k));
+        }
+    })
+    .call(zoom)
+    var handleRadioChange;
+    
+
+var g = svg.append("g")
+    .attr("transform", "translate(-99,-100) scale(35) rotate(-1)")
+d3.select('#plus').on('click', function () {
+    if (k < 80) {
+        k = k + 1;
+        let k2 = +k;
+        l = k2;
+        g.attr("transform", d3.zoomIdentity.translate(-99, -100).scale(k));
+    }
+})
+
+d3.select('#minus').on('click', function () {
+    if (k > 35) {
+        k = k - 1;
+        let k2 = +k;
+        l = k2;
+        g.attr("transform", d3.zoomIdentity.translate(-99, -100).scale(k));
+    }
+})
+
+d3.json("streets.json", function ( data) {
+
+    var lineFunc = d3.line()
+        .x(function (d) { return d.x })
+        .y(function (d) { return d.y })
+        .curve(d3.curveLinear)
+
+    let paths = null;
+    data.forEach((d1, i1) => {
+        paths = g.append("g")
+            .attr("class", "path")
+            .selectAll("path")
+            .data(d1)
+            .enter().append("path")
+            .attr("stroke", "black")
+            .attr("stroke-width", "0.01px")
+            .attr("fill", "none");
+
+        paths.attr("d", lineFunc(d1));
+    });
+});
+
+d3.csv("deaths_age_sex.csv", function ( data) {
+    var Street = [{ name: 'CEORCE STREET', x: 145, y: 417, rotate: -72 }, { name: 'BREWER STREET', x: 400, y: 225, rotate: 42 },
+    { name: 'RECENT STREET', x: 280, y: 380, rotate: -60 }, { name: 'OXFORD STREET', x: 298, y: 585, rotate: 10 },
+    { name: 'DEAN STREET', x: 580, y: 550, rotate: -65 }]
+    var Wi = [{ x: 330, y: 452, rotate: 20 }]
+    var Bi = [{ x: 485, y: 408.5, w: 20, h: 13, rotate: -60 }]
+    var location = g.selectAll("image")
+        .attr("class", "loc")
+        .data(data)
+        .enter().append("image")
+        .attr("xlink:href", 'img/brown.png').attr("class", function (d) { return "c" + d.age + d.gender; })
+        .attr("x", function (d) { return d.x; })
+        .attr("y", function (d) { return d.y; })
+        .attr("width", 0.5)
+        .attr("height", 0.5)
+    var h = g.selectAll(".h")
+        .data(Wi)
+        .enter().append("image")
+        .attr("xlink:href", 'img/blue.png').attr("class", 'allOthers')
+        .attr("transform", function (d) { return "rotate(" + d.rotate + " " + d.x / 35 + "," + d.y / 35 + ")"; })
+        .attr("x", function (d) { return d.x / 35; })
+        .attr("y", function (d) { return d.y / 35; })
+        .attr("width", 0.5)
+        .attr("height", 0.5)
+    var a = g.selectAll(".a")
+        .data(Bi)
+        .enter().append("image")
+        .attr("xlink:href", 'img/brewery.png').attr("class", 'allOthers')
+        .attr("transform", function (d) { return "rotate(" + d.rotate + " " + d.x / 35 + "," + d.y / 35 + ")"; })
+        .attr("x", function (d) { return d.x / 35; })
+        .attr("y", function (d) { return d.y / 35; })
+        .attr("width", function (d) { return d.w / 35 + 0.3; })
+        .attr("height", function (d) { return d.h / 35 + 0.3; })
+    var place = g.selectAll(".place-label")
+        .attr("class", "place-label")
+        .data(Street)
+        .enter().append("text")
+        .attr("transform", function (d) { return "rotate(" + d.rotate + " " + d.x / 35 + "," + d.y / 35 + ")"; })
+        .attr("x", function (d) { return d.x / 35; })
+        .attr("y", function (d) { return d.y / 35; })
+        .style("font-size", "0.3px")
+        .text(function (d) { return d.name; });
+    handleRadioChange = function (val) {
+        if (val == 'gender') {
+            d3.select("#genders").style('display', 'block');
+            d3.select("#locations").style('display', 'none');
+            d3.select("#ages").style('display', 'none');
+            location.attr("xlink:href", function (d) {
+                if (d.gender == 0) {
+                    return "img/red.png";
+                }
+                else {
+                    return "img/green.png";
+                }
+            })
+        }
+        else if (val == 'age') {
+            d3.select("#genders").style('display', 'none');
+            d3.select("#locations").style('display', 'none');
+            d3.select("#ages").style('display', 'block');
+            location.attr("xlink:href", function (d) {
+                let age = '';
+                if (d.age == 0) {
+                    age = "img/age1.png";
+                }
+                else if (d.age == 1) {
+                    age = "img/age2.png";
+                }
+                else if (d.age == 2) {
+                    age = "img/age3.png";
+                }
+                else if (d.age == 3) {
+                    age = "img/age4.png";
+                }
+                else if (d.age == 4) {
+                    age = "img/age5.png";
+                }
+                else {
+                    age = "img/age6.png";
+                }
+                return age;
+            })
+        }
+        else {
+            d3.select("#genders").style('display', 'none');
+            d3.select("#locations").style('display', 'inline');
+            d3.select("#ages").style('display', 'none');
+            location.attr("xlink:href", "img/brown.png");
+        }
+    }
+})
+d3.csv("pumps.csv", function ( data) {
+    data.forEach(d => {
+        var pump = g.append("rect").attr("class", 'allOthers')
+            .attr("xlink:href", 'img/purple.jpeg')
+            .attr("x", +d.x)
+            .attr("y", +d.y - 1)
+            .attr("width", 0.5)
+            .attr("height", 0.5)
+            .style("fill", "#B5338A")
+    });
+})
+//Line chart
+var margin = { top: 10, right: 60, bottom: 40, left: 60 },
+    width = 560 - margin.left - margin.right,
+    height = 280 - margin.top - margin.bottom;
+
+
+var svg = d3.select("#linechart")
+    .append("svg")
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom)
+    .append("g")
+    .attr("transform",
+        "translate(" + margin.left + "," + margin.top + ")");
+
+
+d3.csv("deathdays.csv",
+
+    function (d) {
+        return { date: d3.timeParse("%e-%b")(d.date), value: d.deaths }
+    },
+
+    function (data) {
+
+        let format = d3.timeFormat("%e-%b");
+
+        var x = d3.scaleTime()
+            .domain(d3.extent(data, function (d) { return d.date; }))
+            .range([0, width]);
+        svg.append("g")
+            .attr("transform", "translate(0," + height + ")")
+            .call(d3.axisBottom(x).tickFormat(d3.timeFormat("%b-%e")));
+
+        var y = d3.scaleLinear()
+            .domain([d3.min(data, function (d) { return +d.value; }), d3.max(data, function (d) { return +d.value; })])
+            .range([height, 0]);
+        svg.append("g")
+            .call(d3.axisLeft(y));
+
+        svg.append("path")
+            .datum(data)
+            .attr("fill", "none")
+            .attr("stroke", "#7570b3")
+            .attr("stroke-width", 1.5)
+            .attr("d", d3.line()
+                .x(function (d) { return x(d.date) })
+                .y(function (d) { return y(+d.value) })
+            )
+
+        svg.append("text")
+            .attr("class", "x label")
+            .attr("text-anchor", "middle")
+            .style("font-size", "12px")
+            .attr("x", width)
+            .attr("y", height + 20)
+            .text("Dates");
+
+        svg.append("text")
+            .attr("class", "y label")
+            .attr("text-anchor", "end")
+            .style("font-size", "12px")
+            .attr("y", -30)
+            .attr("x", -60)
+            .attr("transform", "rotate(-90)")
+            .text("Deaths");
+
+        svg.append("text")
+            .style("font-size", "15px")
+            .attr("x", width/2)
+            .attr("y", 265)
+            .text("Deaths Occurred by date");
+           
+    })
+//Gender chart
+
+    //  Dimensions and margins of the graph
+    var gcmargin = { top: 40, right: 20, bottom: 30, left: 40 },
+        gcwidth = 400 - margin.left - margin.right,
+        gcheight = 350 - margin.top - margin.bottom;
+
+    //  Ranges
+    var gcx = d3.scaleBand()
+        .range([0, gcwidth])
+        .padding(0.1);
+    var gcy = d3.scaleLinear()
+        .range([gcheight, 0]);
+
+
+    var genderChart = d3.select("#genderBars").append("svg")
+        .attr("width", gcwidth + gcmargin.left + gcmargin.right)
+        .attr("height", gcheight + gcmargin.top + gcmargin.bottom)
+        .append("g")
+        .attr("transform",
+            "translate(" + gcmargin.left + "," + gcmargin.top + ")");
+
+    var div1 = d3.select("body").append("div")
+        .attr("class", "tooltip")
+        .style("opacity", 0);
+    
+    d3.csv("deaths_age_sex.csv", function ( aData) {
+        
+        var subgroups = ["Male", "Female"]
+        // format the data
+        let data = []
+        subgroups.forEach(function (d, index) {
+            let filterGender = aData.filter((rd) => { return rd.gender == index; })
+            let obj = {};
+            obj["gender"] = d;
+            obj["deaths"] = +filterGender.length;
+            data.push(obj)
+        });
+
+        gcx.domain(data.map(function (d) { return d.gender; }));
+        gcy.domain([0, d3.max(data, function (d) { return d.deaths; })]);
+
+        genderChart.selectAll(".bar")
+            .data(data)
+            .enter().append("rect")
+            .attr("class", "bar")
+            .style("fill", "#998ec3")
+            .attr("x", function (d) { return gcx(d.gender); })
+            .attr("width", gcx.bandwidth())
+            .attr("y", function (d) { return gcy(d.deaths); })
+            .attr("height", function (d) { return gcheight - gcy(d.deaths); })
+            .on("mouseover", function() { this.style.fill="yellow";})
+            .on("mouseout", function() {this.style.fill ="purple";}) 
+            .on("mouseover", function (d) {
+                d3.selectAll('image').style('opacity', 0);
+                d3.selectAll('.allOthers').style('opacity', 1);
+                div1.transition()
+                    .duration(200)
+                    .style("opacity", 1);
+
+                console.log(d);
+
+                var age = d.gender == 'Male' ? 0 : 1;
+                div1.html("Age: " + d.gender + "<br/>" + "Deaths: " + d.deaths)
+                    .style("left", (d3.event.pageX + 30) + "px")
+                    .style("top", (d3.event.pageY - 28) + "px");
+                d3.selectAll('.c0' + age).style('opacity', 1);
+                d3.selectAll('.c1' + age).style('opacity', 1);
+                d3.selectAll('.c2' + age).style('opacity', 1);
+                d3.selectAll('.c3' + age).style('opacity', 1);
+                d3.selectAll('.c4' + age).style('opacity', 1);
+                d3.selectAll('.c5' + age).style('opacity', 1);
+            }).on("mouseout", function (d) {
+                d3.selectAll('image').style('opacity', 1);
+                div1.transition()
+                    .duration(500)
+                    .style("opacity", 0);
+            })
+
+        //  x Axis
+        genderChart.append("g")
+            .attr("transform", "translate(0," + gcheight + ")")
+            .call(d3.axisBottom(gcx));
+
+        //  y Axis
+        genderChart.append("g")
+            .call(d3.axisLeft(gcy).ticks(8));
+
+        genderChart.append("text")
+            .attr("class", "x label")
+            .attr("text-anchor", "middle")
+            .style("font-size", "12px")
+            .attr("x", gcwidth)
+            .attr("y", gcheight + gcmargin.bottom - 3)
+            .text("Gender");
+
+        genderChart.append("text")
+            .attr("class", "y label")
+            .attr("text-anchor", "end")
+            .style("font-size", "12px")
+            .attr("y", -30)
+            .attr("x", -4)
+            .attr("transform", "rotate(-90)")
+            .text("Deaths");
+
+    });
+
+
+
+//Age chart
+
+    //  Dimensions and margins of the graph
+    var acmargin = { top: 40, right: 20, bottom: 30, left: 60 },
+        acwidth = 420 - margin.left - margin.right,
+        acheight = 350 - margin.top - margin.bottom;
+
+    var acx = d3.scaleBand()
+        .range([0, acwidth])
+        .padding(0.1);
+    var acy = d3.scaleLinear()
+        .range([acheight, 0]);
+
+
+    var ageChart = d3.select("#ageBars").append("svg")
+        .attr("width", acwidth + acmargin.left + acmargin.right)
+        .attr("height", acheight + acmargin.top + acmargin.bottom)
+        .append("g")
+        .attr("transform",
+            "translate(" + acmargin.left + "," + acmargin.top + ")");
+
+    var div = d3.select("body").append("div")
+        .attr("class", "tooltip")
+        .style("opacity", 0);
+
+
+    d3.csv("deaths_age_sex.csv", function ( aData) {
+       
+        var agegrps = ['0-10', '11-20', '21-40', '41-60', '61-80', '>80'];
+        var data = []
+        agegrps.forEach(function (d, index) {
+            var groupAge = aData.filter((rd) => { return rd.age == index; })
+            var obj = {};
+            obj["age"] = d;
+            obj["deaths"] = +groupAge.length;
+            data.push(obj)
+        });
+
+        acx.domain(data.map(function (d) { return d.age; }));
+        acy.domain([0, d3.max(data, function (d) { return d.deaths; })]);
+        ageChart.selectAll(".bar")
+            .data(data)
+            .enter().append("rect")
+            .attr("class", "bar")
+            .style("fill", "#5ab4ac")
+            .attr("x", function (d) { return acx(d.age); })
+            .attr("width", acx.bandwidth())
+            .attr("y", function (d) { return acy(d.deaths); })
+            .attr("height", function (d) { return acheight - acy(d.deaths); })
+            .on("mouseover", function (d) {
+                d3.selectAll('image').style('opacity', 0);
+                d3.selectAll('.allOthers').style('opacity', 1);
+                div.transition()
+                    .duration(200)
+                    .style("opacity", 1);
+
+                console.log(d);
+
+                var age = d.age == '0-10' ? 0 : d.age == '11-20' ? 1 : d.age == '21-40' ? 2 : d.age == '41-60' ? 3 : d.age == '61-80' ? 4 : 5;
+                div.html("Age: " + d.age + "<br/>" + "Deaths: " + d.deaths)
+                    .style("left", (d3.event.pageX + 30) + "px")
+                    .style("top", (d3.event.pageY - 28) + "px");
+                d3.selectAll('.c' + age + '0').style('opacity', 1);
+                d3.selectAll('.c' + age + '1').style('opacity', 1);
+            }).on("mouseout", function (d) {
+                d3.selectAll('image').style('opacity', 1);
+                div.transition()
+                    .duration(500)
+                    .style("opacity", 0);
+            })
+
+        //  x Axis
+        ageChart.append("g")
+            .attr("transform", "translate(0," + acheight + ")")
+            .call(d3.axisBottom(acx));
+
+        //  y Axis
+        ageChart.append("g")
+            .call(d3.axisLeft(acy).ticks(8));
+
+        ageChart.append("text")
+            .attr("class", "x label")
+            .attr("text-anchor", "middle")
+            .style("font-size", "12px")
+            .attr("x", acwidth/3)
+            .attr("y", acheight + acmargin.bottom - 3)
+            .text("Age Group");
+
+        ageChart.append("text")
+            .attr("class", "y label")
+            .attr("text-anchor", "end")
+            .style("font-size", "12px")
+            .attr("y", -30)
+            .attr("x", -4)
+            .attr("transform", "rotate(-90)")
+            .text("Deaths");
+            ageChart.append("text")
+            .attr("class", "x label")
+            .attr("text-anchor", "middle")
+            .style("font-size", "15px")
+            .attr("x", acwidth/2)
+            .attr("y","-30")
+            .text("Bar charts depicting Age group and gender distribution");
+
+
+    });
+  </script>
+</body>
+</html>

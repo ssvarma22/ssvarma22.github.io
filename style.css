@@ -1,0 +1,41 @@
+select {
+    font-size: 12px;
+}
+
+button {
+    font-size: 12px;
+}
+
+label {
+    font-size: 12px;
+}
+
+input {
+    font-size: 10px;
+    height: 5px;
+}
+
+div.tooltip {
+    position: absolute;
+    text-align: center;
+    width: 80px;
+    height: 40px;
+    padding: 2px;
+    font: 12px sans-serif;
+    background: rgba(255, 171, 2);
+    border: 0px;
+    border-radius: 2px;
+    pointer-events: none;
+    color: white;
+    padding-top: 10px;
+    border-radius: 10px;
+}
+
+span {
+    margin-left: 1px;
+    margin-right: 1px;
+}
+
+body {
+    padding-right: 5%;
+}
