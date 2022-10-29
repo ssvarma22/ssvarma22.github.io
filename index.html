@@ -4,8 +4,8 @@
 <head>
   <meta charset="utf-8">
   <title>Project-1</title>
-  <script src="./d3/d3.js"></script>
-  <link rel="stylesheet" href="./css/style.css" />
+  <script src=".d3.js"></script>
+  <link rel="stylesheet" href=".css/style.css" />
 
 </head>
 
@@ -60,81 +60,81 @@
           <span id="locations" style="display: inline; margin-top: 5px;">
             <label style="font-weight: bold;">Map Symbols:</label>
             <span>
-              <span><img src="img/purple.jpeg" width="15px" height="15px" /></span>
+              <span><img src="purple.jpeg" width="15px" height="15px" /></span>
               <span style="vertical-align: center;">Pumps</span>
             </span>
             <span>
-              <span><img src="img/brewery.png" width="15px" height="15px" /></span>
+              <span><img src="brewery.png" width="15px" height="15px" /></span>
               <span style="vertical-align: center;">Brewery</span>
             </span>
             <span>
-              <span><img src="img/blue.png" width="15px" height="15px" /></span>
+              <span><img src="blue.png" width="15px" height="15px" /></span>
               <span style="vertical-align: center;">Work House</span>
             </span>
             <span>
-              <span><img src="img/brown.png" width="20px" height="20px" /></span>
+              <span><img src="brown.png" width="20px" height="20px" /></span>
               <span style="vertical-align: center;">Location</span>
             </span>
           </span>
           <span id="genders" style="display: none; margin-top: 5px;">
             <label style="font-weight: bold;">Map Symbols:</label>
             <span>
-              <span><img src="img/purple.jpeg" width="15px" height="15px" /></span>
+              <span><img src="purple.jpeg" width="15px" height="15px" /></span>
               <span style="vertical-align: top;">Pumps</span>
             </span>
             <span>
-              <span><img src="img/brewery.png" width="15px" height="15px" /></span>
+              <span><img src="brewery.png" width="15px" height="15px" /></span>
               <span style="vertical-align: top;">Brewery</span>
             </span>
             <span>
-              <span><img src="img/blue.png" width="15px" height="15px" /></span>
+              <span><img src="blue.png" width="15px" height="15px" /></span>
               <span style="vertical-align: top;">Work House</span>
             </span>
             <span>
-              <span><img src="img/red.png" width="15px" height="15px" /></span>
+              <span><img src="red.png" width="15px" height="15px" /></span>
               <span style="vertical-align: top;">Male</span>
             </span>
             <span>
-              <span><img src="img/green.png" width="15px" height="15px" /></span>
+              <span><img src="green.png" width="15px" height="15px" /></span>
               <span style="vertical-align: top;">Female</span>
             </span>
           </span>
           <span id="ages" style="display: none; margin-top: 5px;">
             <label style="font-weight: bold;">Map Symbols:</label>
             <span>
-              <span><img src="img/purple.jpeg" width="15px" height="15px" /></span>
+              <span><img src="purple.jpeg" width="15px" height="15px" /></span>
               <span style="vertical-align: center;">Pumps</span>
             </span>
             <span>
-              <span><img src="img/brewery.png" width="15px" height="15px" /></span>
+              <span><img src="brewery.png" width="15px" height="15px" /></span>
               <span style="vertical-align: center;">Brewery</span>
             </span>
             <span>
-              <span><img src="img/blue.png" width="15px" height="15px" /></span>
+              <span><img src="blue.png" width="15px" height="15px" /></span>
               <span style="vertical-align: center;">Work House</span>
             </span>
             <span>
-              <span><img src="img/age1.png" width="20px" height="20px" /></span>
+              <span><img src="age1.png" width="20px" height="20px" /></span>
               <span style="vertical-align: center;">0-10</span>
             </span>
             <span>
-              <span><img src="img/age2.png" width="20px" height="20px" /></span>
+              <span><img src="age2.png" width="20px" height="20px" /></span>
               <span style="vertical-align: center;">11-20</span>
             </span>
             <span>
-              <span><img src="img/age3.png" width="20px" height="20px" /></span>
+              <span><img src="age3.png" width="20px" height="20px" /></span>
               <span style="vertical-align: center;">21-40</span>
             </span>
             <span>
-              <span><img src="img/age4.png" width="20px" height="20px" /></span>
+              <span><img src="age4.png" width="20px" height="20px" /></span>
               <span style="vertical-align: center;">41-60</span>
             </span>
             <span>
-              <span><img src="img/age5.png" width="20px" height="20px" /></span>
+              <span><img src="age5.png" width="20px" height="20px" /></span>
               <span style="vertical-align: center;">61-80</span>
             </span>
             <span>
-              <span><img src="img/age6.png" width="20px" height="20px" /></span>
+              <span><img src="age6.png" width="20px" height="20px" /></span>
               <span style="vertical-align: center;">>80</span>
             </span>
 
@@ -210,7 +210,7 @@ d3.select('#minus').on('click', function () {
     }
 })
 
-d3.json("/streets.json", function ( data) {
+d3.json("streets.json", function ( data) {
 
     var lineFunc = d3.line()
         .x(function (d) { return d.x })
@@ -232,7 +232,7 @@ d3.json("/streets.json", function ( data) {
     });
 });
 
-d3.csv("/deaths_age_sex.csv", function ( data) {
+d3.csv("deaths_age_sex.csv", function ( data) {
     var Street = [{ name: 'CEORCE STREET', x: 145, y: 417, rotate: -72 }, { name: 'BREWER STREET', x: 400, y: 225, rotate: 42 },
     { name: 'RECENT STREET', x: 280, y: 380, rotate: -60 }, { name: 'OXFORD STREET', x: 298, y: 585, rotate: 10 },
     { name: 'DEAN STREET', x: 580, y: 550, rotate: -65 }]
@@ -323,7 +323,7 @@ d3.csv("/deaths_age_sex.csv", function ( data) {
         }
     }
 })
-d3.csv("/pumps.csv", function ( data) {
+d3.csv("pumps.csv", function ( data) {
     data.forEach(d => {
         var pump = g.append("rect").attr("class", 'allOthers')
             .attr("xlink:href", 'img/purple.jpeg')
@@ -349,9 +349,7 @@ var svg = d3.select("#linechart")
         "translate(" + margin.left + "," + margin.top + ")");
 
 
-d3.csv("/deathdays.csv",
-
-    function (d) {
+d3.csv("deathdays.csv",function (d) {
         return { date: d3.timeParse("%e-%b")(d.date), value: d.deaths }
     },
 
@@ -432,7 +430,7 @@ d3.csv("/deathdays.csv",
         .attr("class", "tooltip")
         .style("opacity", 0);
     
-    d3.csv("/deaths_age_sex.csv", function ( aData) {
+    d3.csv("deaths_age_sex.csv", function ( aData) {
         
         var subgroups = ["Male", "Female"]
         // format the data
@@ -541,7 +539,7 @@ d3.csv("/deathdays.csv",
         .style("opacity", 0);
 
 
-    d3.csv("/deaths_age_sex.csv", function ( aData) {
+    d3.csv("deaths_age_sex.csv", function ( aData) {
        
         var agegrps = ['0-10', '11-20', '21-40', '41-60', '61-80', '>80'];
         var data = []
